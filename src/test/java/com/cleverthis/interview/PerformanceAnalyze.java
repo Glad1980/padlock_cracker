@@ -10,15 +10,15 @@ public class PerformanceAnalyze {
         new Solution().solve(padlock);
     }
 
-    private static final int TOTAL_RUN = 500;
-    private static final int NUMPAD_SIZE = 9;
+    private static final int TOTAL_RUN = 50;
+    private static final int NUMPAD_SIZE = 4 ;
 
     static {
         System.out.println("Total run: " + TOTAL_RUN);
         System.out.println("Numpad size: " + NUMPAD_SIZE);
     }
 
-    public static void main(String[] args) {
+         public static void main(String[] args) {
         long timeSum = 0;
         long writeSum = 0;
         for (int i = 0; i < TOTAL_RUN; i++) {
