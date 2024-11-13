@@ -32,13 +32,7 @@ public class Solution {
         IPadlockConnector padlockObjectCon = new PadlockRestConnector(uri);
         padlockCracker.solve(padlockObjectCon);
     }
-    public static void main(String[] args) {
-        PadlockImpl padlock = new PadlockImpl(4);
-        Solution s = new Solution();
-        s.solve(padlock);
-        System.out.println("Checker Counter " + padlock.getCheckCounter());
-        System.out.println("Write Counter " + padlock.getWriteCounter());
-    }
+   
 }
 
 
