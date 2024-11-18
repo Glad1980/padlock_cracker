@@ -16,9 +16,9 @@ import com.cleverthis.interview.connect.IPadlockConnector;
  * <ul>
  * <li>Created PadlockCracker class to solve the padlock cracking problem using
  * the provided padlock connector.</li>
- * <li>Implemented the crack method to initialize the padlock connector and
+ * <li>Implemented the crack  method to initialize the padlock connector and
  * perform the cracking operation.</li>
- * <li>Generated permutations of keys to attempt cracking the padlock.</li>
+ * <li>Get or generate permutations of keys from cache to attempt cracking the padlock.</li>
  * <li>Implemented logic to crack the padlock using the generated
  * permutations.</li>
  * <li>while the most expensive operation is writing into memory buffer,
@@ -31,10 +31,11 @@ import com.cleverthis.interview.connect.IPadlockConnector;
  */
 public class PadlockCracker implements IPadlockCracker {
     private IPadlockConnector padlockConnector;
-
+    private Set<Integer> visited ;
     @Override
     public void crack(IPadlockConnector padlockConnector) {
 
+        visited = new HashSet<Integer>();
         this.padlockConnector = padlockConnector;
         int numpadSize = padlockConnector.getNumpadSize();
         System.out.println("Starting Cracker with numpadSize : " + numpadSize);
@@ -47,7 +48,7 @@ public class PadlockCracker implements IPadlockCracker {
     }
 
     private void crackPadLock(List<List<Integer>> permutations, List<Integer> keys) {
-        // simulate the current buffer, to not overwrite the same value.
+        // simulate the current buffer, to keep track of the values.
         int[] mem = new int[padlockConnector.getNumpadSize()];
         Arrays.fill(mem, -1);
 
@@ -55,13 +56,13 @@ public class PadlockCracker implements IPadlockCracker {
         while (!permutations.isEmpty()) {
             permutation = getNearstArray(permutation, permutations);
             for (int i = 0; i < permutation.size(); i++) {
-                // check if the value is already written in the address
+                // check if the value is already written in an address
                 if (mem[i] != permutation.get(i)) {
                     mem[i] = permutation.get(i);
                     try {
                         padlockConnector.writeInputBuffer(i, permutation.get(i));
                     } catch (IllegalStateException e) {
-                        // write in wrone address
+                        // wrong address
                         System.out.println("error while write Input Buffer: " + e.getMessage());
                     }
                 }
@@ -93,7 +94,7 @@ public class PadlockCracker implements IPadlockCracker {
      * <li>Return the chosen permutation.</li>
      * </ul>
      */
-    Set<Integer> visited = new HashSet<Integer>();
+   
 
     private List<Integer> getNearstArray(List<Integer> current, List<List<Integer>> permutations) {
         int index = 0;

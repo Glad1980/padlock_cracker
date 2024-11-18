@@ -36,4 +36,5 @@ public class Solution {
      * padlockCracker.solve(padlockObjectCon);
      * }
      */
+
 }
