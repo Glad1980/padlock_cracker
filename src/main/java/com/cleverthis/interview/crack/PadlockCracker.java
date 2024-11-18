@@ -33,14 +33,14 @@ public class PadlockCracker implements IPadlockCracker {
     private IPadlockConnector padlockConnector;
 
     @Override
-    public void solve(IPadlockConnector padlockConnector) {
+    public void crack(IPadlockConnector padlockConnector) {
 
         this.padlockConnector = padlockConnector;
         int numpadSize = padlockConnector.getNumpadSize();
         System.out.println("Starting Cracker with numpadSize : " + numpadSize);
-        if (numpadSize < 1) {
-            throw new IllegalArgumentException("numpadSize must be a positive number" + numpadSize);
-        }
+        // if (numpadSize < 1) {   // no need to handle this exception,since it's handled 
+        //     throw new IllegalArgumentException("numpadSize must be a positive number" + numpadSize);
+        // }
         List<Integer> keys = IntStream.range(0, numpadSize).boxed().collect(Collectors.toList());
         List<List<Integer>> permutations = PermutationCache.generatePermutations(keys);
         crackPadLock(permutations, keys);

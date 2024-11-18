@@ -11,6 +11,6 @@ import com.cleverthis.interview.connect.IPadlockConnector;
  */
 public interface IPadlockCracker {
 
-    public void solve(IPadlockConnector padlockConnector);
+    public void crack(IPadlockConnector padlockConnector);
 
 }
