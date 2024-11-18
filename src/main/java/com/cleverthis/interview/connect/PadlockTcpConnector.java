@@ -6,7 +6,7 @@ import java.net.Socket;
 /** * Implement RESTful connector for padlock 
  *  <br/> 
  * <ul>
- * <li>Created PadlockRestConnector class to communicate with the padlock via RESTful API.</li> 
+ * <li>An example to create PadlockRestConnector class to communicate with the padlock via RESTful API.</li> 
  * <li>Implemented methods to get the number of buttons on the numpad, write input buffer, and check if the passcode is correct.</li>
  * <li>Designed to allow for future extensions and modular communication with the padlock cracker.</li>
  * </ul> 

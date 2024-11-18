@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- *  Implement RESTful connector for padlock * 
- * - Created PadlockRestConnector class to communicate with the padlock via RESTful API. 
+ * - An example to create PadlockRestConnector class to communicate with the padlock via RESTful API. 
  * - Implemented methods to get the number of buttons on the numpad, write input
  *   buffer, and check if the passcode is correct.
  * - Designed to allow for future extensions and modular communication with the padlock cracker.
