@@ -104,11 +104,8 @@ public class PadlockCracker implements IPadlockCracker {
                 index++;
             }
         }
-        System.out.println("index= " + index);
         visited.add(index);
         List<Integer> per = permutations.get(index);
-        System.out.println("per= " + per);
-        // permutations.remove(index);
         return per;
     }
 

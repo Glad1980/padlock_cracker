@@ -16,7 +16,6 @@ public class PermutationCache {
     // permutation
     public static List<List<Integer>> generatePermutations(List<Integer> keys) {
         if (permutationsCache.containsKey(keys.size())) {
-            System.out.println("from Cache ... ");
             return permutationsCache.get(keys.size());
         } else {
             List<List<Integer>> permutations = new ArrayList<>();
