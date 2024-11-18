@@ -11,7 +11,7 @@ public class PerformanceAnalyze {
     }
 
     private static final int TOTAL_RUN = 10;
-    private static final int NUMPAD_SIZE = 4 ;
+    private static final int NUMPAD_SIZE = 5 ;
 
     static {
         System.out.println("Total run: " + TOTAL_RUN);

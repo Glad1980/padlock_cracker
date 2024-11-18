@@ -1,53 +1,37 @@
-# padlock_cracker
-This is an padlock cracker project
+# Padlock Cracker
 
-Welcome to stage 3 of the interview. At this stage, you're going to write a software to crack a padlock.
+This project provides a solution to crack a metaphorical padlock using various connector implementations. The padlock has several features, including a numpad where each button is used exactly once, and expensive write operations to the input buffer. The project aims to provide a modular design to allow for future extensions, such as connecting the padlock using TCP sockets, RESTful APIs, or CLI programs.
 
-The padlock, of course, is not real, it's only a metaphor for a physical padlock, so there is no legal issues.
+## Features
 
-The padlock has several features:
+- The solution is designed to be easily extendable with different types of connectors.
+- Java Object Connector, A connector implementation that communicates with the padlock as a Java object.
+- RESTful API Connector that communicates with the padlock via an RESTful API, is ready to be added.
+- TCP Connectort communicates with the padlock via an TCP sockets, is ready to be added.
+- To add a new connector, you should code a new connector that implements the IPadlockConnector Interface and pass it as a parameter to IPadlockCracker. The PadlockCracker implementation should not be modified.
+- Efficiency: The solution attempts to minimize the cost of changing the input buffer by checking for the nearest permutation used,
+   best memory write for each padlock solved with size s, permutations n = s!, then (n * 2) + (n - 2) memory write for the worst case
+     example, size = 4, then s! = 24, then memory write = 24 * 2 + 2 = 50
+- Since the Numpad size had the same permutations, a Permutations Cache (local cache) was implemented to increase performance.
 
-1. The keys/buttons on the numpad of the padlock are used exactly once. 
-   This means for a 4 button padlock, code like 1234, 1324 are valid, 
-   but code like 1123 and 122 are invalid.
-2. The padlock is modified for you so you can operate it from Java.
-   The hardware part need to do some heavy work to figure out the input buffer memory.
-   So every time you write a digit of the input buffer, it takes a long time to do (almost 1 second).
-3. The test process is fast. There is no heavy work occurs when asking the padlock if the input is correct.
-4. If the input passcode is rejected (aka wrong code), the input buffer will stay untouched.
-   So if 1234 is the wrong one, after test it's still 1234 in the memory.
-5. The correct passcode is chosen randomly.
+## Project Structure
 
+- `src/main/java/com/cleverthis/interview/padlock/PadlockImpl.java`: The padlock implementation.
+- `src/main/java/com/cleverthis/interview/connect/PadlockObjectConnector.java`: The Java object connector.
+- `src/main/java/com/cleverthis/interview/connect/PadlockRestConnector.java`: The RESTful API connector.
+- `src/main/java/com/cleverthis/interview/connect/PadlockTcpConnector.java`: The TCP connector.
+- `src/main/java/com/cleverthis/interview/crack/PadlockCracker.java`: The padlock cracker implementation.
+- `src/main/java/com/cleverthis/interview/crack/PermutationCache.java`: To Cache the Permutations for used numpad size.
+- `src/main/java/com/cleverthis/interview/crack/IPadlockCracker.java`: The padlock cracker interface.
+- `src/main/java/com/cleverthis/interview/Solution.java`: The solution class to solve the padlock using different connectors.
+- `src/test/java/com/cleverthis/interview/SolutionTest.java`: Unit tests for the solution.
 
-## Your task
-                             
-1. Implement a cracking software that will work with any number of buttons (there is at least 1 button).
-2. Try to make the process as fast as possible.
-3. Currently, the padlock is a simple Java object, but in the future we may want to connect it
-   using TCP socket, RESTful API, a cli program, or something else. Please use your software
-   design techniques to make your software be easier to add those features.
+## Usage
 
-Your code should be placed in the root project, where the `padlock-impl` subproject is the actual
-implementation of the padlock.
-Please leave it untouched when you submit your work.
+### Running the Solution
 
-You're encouraged to iterate through your solutions, just like how we solve the real world hard problems.
-Start with a simple but slow one, then figure out how to make it faster, bit by bit.
-By the end of the day, you have to choose one solution to submit even if you have multiple solutions available.
-Just like we need to choose one implementation for the production environment.
+To run the solution with the Java object connector, use the class Solution.java with the proper connector, Currently, Only a simple Java Object connector was implemented.
 
-## Criteria
-
-The algorithm used to crack the padlock is not that important.
-You have to write a working solution that will crack the padlock no matter how long it take.
-The faster the better, but a slow one is also acceptable.
-
-Proper software design techniques are also evaluated from the code.
-You shouldn't slap everything into one giant Java file.
-You should design the proper architectures for your code.
-
-Last but not least, readability and maintainability are also important.
-Take this project as a show off to your designing and coding skills.
 
 ## Build
 
@@ -69,9 +53,6 @@ and use `./gradlew runPerformanceTest` to get an analysis.
 > The `gradlew` script will download one for you.
 > Just install a valid jdk (version >= 8) and very thing should be fine.
 
-## Still have unclear problems?
-
-Feel free to contact Jeffrey Freeman (jeffrey.freeman@cleverthis.com).
 # padlock_cracker
 This is an padlock cracker project
 # padlock_cracker

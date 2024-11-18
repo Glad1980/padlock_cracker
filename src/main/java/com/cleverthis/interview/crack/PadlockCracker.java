@@ -2,8 +2,9 @@ package com.cleverthis.interview.crack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -41,7 +42,7 @@ public class PadlockCracker implements IPadlockCracker {
             throw new IllegalArgumentException("numpadSize must be a positive number" + numpadSize);
         }
         List<Integer> keys = IntStream.range(0, numpadSize).boxed().collect(Collectors.toList());
-        List<List<Integer>> permutations = generatePermutations(keys);
+        List<List<Integer>> permutations = PermutationCache.generatePermutations(keys);
         crackPadLock(permutations, keys);
     }
 
@@ -57,7 +58,12 @@ public class PadlockCracker implements IPadlockCracker {
                 // check if the value is already written in the address
                 if (mem[i] != permutation.get(i)) {
                     mem[i] = permutation.get(i);
-                    padlockConnector.writeInputBuffer(i, permutation.get(i));
+                    try {
+                        padlockConnector.writeInputBuffer(i, permutation.get(i));
+                    } catch (IllegalStateException e) {
+                        // write in wrone address
+                        System.out.println("error while write Input Buffer: " + e.getMessage());
+                    }
                 }
 
             }
@@ -83,21 +89,26 @@ public class PadlockCracker implements IPadlockCracker {
      * <li>Iterate through the list of permutations.</li>
      * <li>Find the permutation with the least number of changes compared to the
      * current permutation.</li>
-     * <li>Remove the chosen permutation from the list of permutations.</li>
+     * <li>Addd the chosen permutation to the visited Set</li>
      * <li>Return the chosen permutation.</li>
      * </ul>
      */
+    Set<Integer> visited = new HashSet<Integer>();
+
     private List<Integer> getNearstArray(List<Integer> current, List<List<Integer>> permutations) {
         int index = 0;
         for (List<Integer> per : permutations) {
-            if (changesCount(per, current) <= 2) {
+            if (!visited.contains(index) && changesCount(per, current) <= 2) {
                 break;
             } else {
                 index++;
             }
         }
+        System.out.println("index= " + index);
+        visited.add(index);
         List<Integer> per = permutations.get(index);
-        permutations.remove(index);
+        System.out.println("per= " + per);
+        // permutations.remove(index);
         return per;
     }
 
@@ -120,25 +131,5 @@ public class PadlockCracker implements IPadlockCracker {
             }
         }
         return changesCount;
-    }
-
-    // generate all Permutations without duplicating the integer value in the same
-    // permutation
-    private List<List<Integer>> generatePermutations(List<Integer> keys) {
-        List<List<Integer>> permutations = new ArrayList<>();
-        generatePermutationsHelper(keys, 0, permutations);
-        return permutations;
-    }
-
-    private void generatePermutationsHelper(List<Integer> keys, int start, List<List<Integer>> permutations) {
-        if (start == keys.size() - 1) {
-            permutations.add(new ArrayList<>(keys));
-            return;
-        }
-        for (int i = start; i < keys.size(); i++) {
-            Collections.swap(keys, start, i);
-            generatePermutationsHelper(keys, start + 1, permutations);
-            Collections.swap(keys, start, i);
-        }
     }
 }
