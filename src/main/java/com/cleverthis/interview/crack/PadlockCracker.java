@@ -16,7 +16,7 @@ import com.cleverthis.interview.connect.IPadlockConnector;
  * <ul>
  * <li>Created PadlockCracker class to solve the padlock cracking problem using
  * the provided padlock connector.</li>
- * <li>Implemented the solve method to initialize the padlock connector and
+ * <li>Implemented the crack method to initialize the padlock connector and
  * perform the cracking operation.</li>
  * <li>Generated permutations of keys to attempt cracking the padlock.</li>
  * <li>Implemented logic to crack the padlock using the generated
